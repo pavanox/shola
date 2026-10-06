@@ -1353,8 +1353,8 @@ body {
        palette and text readable (no desaturating/cold gray cast). */
     background-color: #0A0A0A;                 /* fallback beneath image */
     background-image: linear-gradient(
-            rgba(0, 0, 0, 0.65),
-            rgba(0, 0, 0, 0.34)
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
         ),
         url('../img/products/bg.jpeg');
     background-size: cover;
@@ -1369,6 +1369,20 @@ body {
 @media (min-width: 992px) {
     body {
         background-attachment: fixed;
+    }
+}
+
+/* GLOBAL PAGE BACKGROUND — small screens / mobile only
+   Same image, but with a much darker 70% black wash so content stays
+   readable on small displays. Desktop/tablet-landscape (>=992px) keeps
+   the 50% overlay defined on `body` above — unchanged. */
+@media (max-width: 991.98px) {
+    body {
+        background-image: linear-gradient(
+                rgba(0, 0, 0, 0.8),
+                rgba(0, 0, 0, 0.8)
+            ),
+            url('../img/products/bg.jpeg');
     }
 }
 
@@ -8756,7 +8770,7 @@ p  { line-height: 1.75; }
 .shola-why-hero h3,
 .gh-art-card h3,
 .gh-story-card h3 {
-    font-size: var(--fs-h3);
+    font-size: 18px;
 }
 
 /* Small card titles � h4 level */
@@ -8826,7 +8840,7 @@ p  { line-height: 1.75; }
 .gh-art-heading p,
 .gh-art-card p,
 .gh-story-card p {
-    font-size: var(--fs-md);
+    font-size: 14px;
     line-height: 1.75;
     color: var(--text-body);
 }

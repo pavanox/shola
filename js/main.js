@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "Freshly Packed Coffee Powder",
             "Matching Bowl",
             "Nuts Tube",
+            "Scented Dried Flowers",
           ],
         },
 
@@ -199,8 +200,6 @@ document.addEventListener("DOMContentLoaded", function () {
           features: [
             "Premium Raw Honey",
             "Whole Black Pepper",
-            "Traditional Wooden Honey Dripper",
-            "Personalized Message Card",
           ],
         },
 
@@ -223,8 +222,6 @@ document.addEventListener("DOMContentLoaded", function () {
           features: [
             "Rich Coffee Powder",
             "Premium Honey",
-            "Traditional Wooden Honey Dripper",
-            "Personalized Message Card",
           ],
         },
 
@@ -248,7 +245,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "Rich Coffee Powder",
             "Whole Black Pepper",
             "Nuts Tube",
-            "Personalized Message Card",
           ],
         },
       ],
@@ -271,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
           description:
             "A simple and thoughtful gift designed to make a big impression—perfect for celebrations, giveaways, and meaningful thank-you gestures.",
 
-          features: ["Raw Honey", "Nuts Tube", "Personalized Note"],
+          features: ["Raw Honey"],
         },
       ],
     },
