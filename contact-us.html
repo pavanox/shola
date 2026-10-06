@@ -261,7 +261,7 @@
 
                     <div class="shola-contact-form">
 
-                        <form action="#" method="post">
+                        <form id="contact-form-corporate" data-shola-form novalidate>
 
                             <div class="row">
 
@@ -325,7 +325,8 @@
                                 <label class="visually-hidden" for="contact-message">Message</label>
 
                                 <textarea rows="6" id="contact-message" name="message" class="form-control shola-input"
-                                    placeholder="Message..." required aria-describedby="contact-message-msg"></textarea>
+                                    placeholder="Message..." minlength="10" required
+                                    aria-describedby="contact-message-msg"></textarea>
 
                                 <p class="shola-field-msg" id="contact-message-msg">
                                     Please write a short message.
@@ -341,6 +342,8 @@
                                 <i class="fa fa-arrow-right ms-2"></i>
 
                             </button>
+
+                            <p class="shola-form-status" role="status" aria-live="polite"></p>
 
                         </form>
 
@@ -393,6 +396,7 @@
     <!-- Template Javascript -->
     <script src="js/include.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/form-handler.js"></script>
     <script>
         // Ensure carousel is initialized even if auto-ride is interfered with
         document.addEventListener('DOMContentLoaded', function () {

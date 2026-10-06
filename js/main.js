@@ -87,8 +87,18 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "The Canopy Collection",
 
-          image:
-            "https://placehold.co/700x700/f7f3ec/b98b4d?text=Wooden+Tray+Curation",
+          image: "img/products/canopy/1.jpeg",
+
+          images: [
+            "img/products/canopy/1.jpeg",
+            "img/products/canopy/2.jpeg",
+            "img/products/canopy/3.jpeg",
+            "img/products/canopy/4.jpeg",
+            "img/products/canopy/5.jpeg",
+            "img/products/canopy/6.jpeg",
+            "img/products/canopy/7.jpeg",
+            "img/products/canopy/8.jpeg",
+          ],
 
           description:
             "A rustic blend of pure honey, rich coffee, and bold pepper, paired with handcrafted wooden essentials for your daily ritual.",
@@ -105,8 +115,16 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "The Aesthetic Coffee Experience",
 
-          image:
-            "https://placehold.co/700x700/f7f3ec/b98b4d?text=Aesthete+Coffee+Experience",
+          image: "img/products/signature/3.jpeg",
+
+          images: [
+            "img/products/signature/3.jpeg",
+            "img/products/signature/1.jpeg",
+            "img/products/signature/2.jpeg",
+            "img/products/signature/4.jpeg",
+            "img/products/signature/5.jpeg",
+            "img/products/signature/6.jpeg",
+          ],
 
           description:
             "A cozy, aromatic ritual packed into a stunning keepsake rigid box.",
@@ -131,8 +149,16 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "The Heritage Crate",
 
-          image:
-            "https://placehold.co/700x700/f7f3ec/b98b4d?text=Premium+Collection",
+          image: "img/products/premium/1.jpeg",
+
+          images: [
+            "img/products/premium/1.jpeg",
+            "img/products/premium/2.jpeg",
+            "img/products/premium/3.jpeg",
+            "img/products/premium/4.jpeg",
+            "img/products/premium/5.jpeg",
+            "img/products/premium/6.jpeg",
+          ],
 
           description:
             "An elegant rigid-box hamper created for corporate gifting, professional appreciation, and high-profile celebrations.",
@@ -157,8 +183,15 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "The Sweet & Spice Blend",
 
-          image:
-            "https://placehold.co/700x700/f7f3ec/b98b4d?text=Sweet+%26+Spice",
+          image: "img/products/curated/2.jpeg",
+
+          images: [
+            "img/products/curated/2.jpeg",
+            "img/products/curated/1.jpeg",
+            "img/products/curated/3.jpeg",
+            "img/products/curated/4.jpeg",
+            "img/products/curated/5.jpeg",
+          ],
 
           description:
             "A perfect balance of sweet warmth and bold spice in a curated paper bag, ideal for wellness lovers and gourmet collections.",
@@ -174,8 +207,15 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "Morning Brew Ritual",
 
-          image:
-            "https://placehold.co/700x700/f7f3ec/b98b4d?text=Morning+Brew+Ritual",
+          image: "img/products/curated/3.jpeg",
+
+          images: [
+            "img/products/curated/3.jpeg",
+            "img/products/curated/1.jpeg",
+            "img/products/curated/2.jpeg",
+            "img/products/curated/4.jpeg",
+            "img/products/curated/5.jpeg",
+          ],
 
           description:
             "The ultimate morning upgrade that pairs rich coffee with the natural sweetness of pure honey.",
@@ -191,8 +231,15 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "Bold Mix of Brew & Spice",
 
-          image:
-            "https://placehold.co/700x700/f7f3ec/b98b4d?text=Brew+%26+Spice",
+          image: "img/products/curated/1.jpeg",
+
+          images: [
+            "img/products/curated/1.jpeg",
+            "img/products/curated/2.jpeg",
+            "img/products/curated/3.jpeg",
+            "img/products/curated/4.jpeg",
+            "img/products/curated/5.jpeg",
+          ],
 
           description:
             "An earthy, robust combination designed for those who appreciate deep, intense, and sophisticated flavors.",
@@ -217,7 +264,9 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "Gift-lets",
 
-          image: "https://placehold.co/700x700/f7f3ec/b98b4d?text=Mini+Hamper",
+          image: "img/products/mini/1.jpeg",
+
+          images: ["img/products/mini/1.jpeg", "img/products/mini/2.jpeg"],
 
           description:
             "A simple and thoughtful gift designed to make a big impression—perfect for celebrations, giveaways, and meaningful thank-you gestures.",
@@ -249,15 +298,188 @@ document.addEventListener("DOMContentLoaded", function () {
   const productSelector = document.getElementById("productSelector");
 
   /* ==================================
+        PRODUCT IMAGE CAROUSEL
+  ================================== */
+
+  const carousel = document.getElementById("productCarousel");
+  const carouselTrack = document.getElementById("productCarouselTrack");
+  const carouselDots = document.getElementById("productCarouselDots");
+  const carouselPrevBtn = document.querySelector(".shola-carousel-prev");
+  const carouselNextBtn = document.querySelector(".shola-carousel-next");
+
+  const CAROUSEL_INTERVAL = 4500;
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  let carouselImages = [];
+  let carouselIndex = 0;
+  let carouselTimer = null;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  function stopCarousel() {
+    if (carouselTimer) {
+      clearInterval(carouselTimer);
+      carouselTimer = null;
+    }
+  }
+
+  function startCarousel() {
+    stopCarousel();
+
+    if (reduceMotion || carouselImages.length <= 1) return;
+
+    carouselTimer = setInterval(function () {
+      goToSlide(carouselIndex + 1);
+    }, CAROUSEL_INTERVAL);
+  }
+
+  function goToSlide(index) {
+    if (!carouselTrack || !carouselDots || !carouselImages.length) return;
+
+    carouselIndex = (index + carouselImages.length) % carouselImages.length;
+
+    carouselTrack.style.transform =
+      "translateX(-" + carouselIndex * 100 + "%)";
+
+    carouselDots
+      .querySelectorAll(".shola-carousel-dot")
+      .forEach(function (dot, dotIndex) {
+        dot.classList.toggle("active", dotIndex === carouselIndex);
+      });
+  }
+
+  function renderCarousel(product) {
+    if (!carousel || !carouselTrack || !carouselDots) return;
+
+    carouselImages =
+      product.images && product.images.length
+        ? product.images
+        : [product.image];
+
+    carouselTrack.innerHTML = "";
+    carouselDots.innerHTML = "";
+
+    carouselImages.forEach(function (src, index) {
+      const slide = document.createElement("div");
+      slide.className = "shola-carousel-slide";
+
+      const img = document.createElement("img");
+
+      img.src = src;
+      img.alt = product.title + " - image " + (index + 1);
+      img.width = 700;
+      img.height = 700;
+      img.decoding = "async";
+
+      if (index > 0) {
+        img.loading = "lazy";
+      }
+
+      slide.appendChild(img);
+      carouselTrack.appendChild(slide);
+
+      const dot = document.createElement("button");
+
+      dot.type = "button";
+      dot.className = "shola-carousel-dot";
+      dot.setAttribute(
+        "aria-label",
+        "Show image " + (index + 1) + " of " + carouselImages.length
+      );
+
+      dot.addEventListener("click", function () {
+        goToSlide(index);
+        startCarousel();
+      });
+
+      carouselDots.appendChild(dot);
+    });
+
+    carousel.classList.toggle("is-single", carouselImages.length <= 1);
+
+    goToSlide(0);
+    startCarousel();
+  }
+
+  if (carousel) {
+    if (carouselPrevBtn) {
+      carouselPrevBtn.addEventListener("click", function () {
+        goToSlide(carouselIndex - 1);
+        startCarousel();
+      });
+    }
+
+    if (carouselNextBtn) {
+      carouselNextBtn.addEventListener("click", function () {
+        goToSlide(carouselIndex + 1);
+        startCarousel();
+      });
+    }
+
+    // Pause auto-scroll while hovering (mouse/pen only)
+    carousel.addEventListener("pointerenter", function (event) {
+      if (event.pointerType === "touch") return;
+      stopCarousel();
+    });
+
+    carousel.addEventListener("pointerleave", function (event) {
+      if (event.pointerType === "touch") return;
+      startCarousel();
+    });
+
+    // Pause while a control has keyboard focus
+    carousel.addEventListener("focusin", stopCarousel);
+    carousel.addEventListener("focusout", startCarousel);
+
+    // Touch swipe support
+    carousel.addEventListener(
+      "touchstart",
+      function (event) {
+        stopCarousel();
+
+        touchStartX = event.changedTouches[0].screenX;
+        touchStartY = event.changedTouches[0].screenY;
+      },
+      { passive: true }
+    );
+
+    carousel.addEventListener(
+      "touchend",
+      function (event) {
+        const deltaX = event.changedTouches[0].screenX - touchStartX;
+        const deltaY = event.changedTouches[0].screenY - touchStartY;
+
+        if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY)) {
+          goToSlide(carouselIndex + (deltaX < 0 ? 1 : -1));
+        }
+
+        startCarousel();
+      },
+      { passive: true }
+    );
+
+    // Stop auto-scroll while the tab is hidden
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        stopCarousel();
+      } else {
+        startCarousel();
+      }
+    });
+  }
+
+  /* ==================================
         SHOW PRODUCT
   ================================== */
 
   function showProduct(product, collection) {
     if (!product) return;
 
-    // Update image immediately
-    productImage.src = product.image;
-    productImage.alt = product.title;
+    // Update image carousel immediately
+    renderCarousel(product);
 
     // Update category immediately
     productCategory.textContent = collection.category;
@@ -280,7 +502,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Make sure nothing is hidden
-    productImage.classList.remove("fade-out");
+    if (carousel) {
+      carousel.classList.remove("fade-out");
+    }
     productCategory.classList.remove("fade-out");
     productTitle.classList.remove("fade-out");
     productDescription.classList.remove("fade-out");

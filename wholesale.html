@@ -237,7 +237,7 @@
 
                     <div class="shola-wholesale-card">
 
-                        <img src="https://placehold.co/500x350/f6f2ec/b98b4d?text=Raw+Honey"
+                        <img src="img/products/bulk/raw-honey.jpeg"
                             alt="SHOLA raw honey - Pure natural honey from Malnad Karnataka" width="500" height="350"
                             loading="lazy" decoding="async">
 
@@ -282,7 +282,7 @@
 
                     <div class="shola-wholesale-card">
 
-                        <img src="https://placehold.co/500x350/f6f2ec/b98b4d?text=Black+Pepper"
+                        <img src="img/products/bulk/black-pepper.jpeg"
                             alt="SHOLA whole black pepper - Premium Western Ghats black pepper from Karnataka"
                             width="500" height="350" loading="lazy" decoding="async">
 
@@ -326,7 +326,7 @@
 
                     <div class="shola-wholesale-card">
 
-                        <img src="https://placehold.co/500x350/f6f2ec/b98b4d?text=Coffee"
+                        <img src="img/products/bulk/royal-coffee.jpeg"
                             alt="SHOLA coffee powder - Fresh Malnad coffee powder from Karnataka" width="500"
                             height="350" loading="lazy" decoding="async">
 
@@ -381,7 +381,8 @@
 
                 </p>
 
-                <a href="#contact">
+                <a href="#wholesaleQuotationModal" data-wholesale-modal-open aria-haspopup="dialog"
+                    aria-controls="wholesaleQuotationModal">
 
                     Request Wholesale Quotation
 
@@ -402,6 +403,133 @@
             class="bi bi-arrow-up"></i></a>
 
 
+    <!-- ==================================
+         WHOLESALE QUOTATION MODAL
+    =================================== -->
+
+    <div class="shola-modal" id="wholesaleQuotationModal" role="dialog" aria-modal="true"
+        aria-labelledby="wholesaleModalTitle" aria-hidden="true">
+
+        <!-- Backdrop: click anywhere on it to close -->
+
+        <div class="shola-modal-backdrop" data-modal-close></div>
+
+        <div class="shola-modal-dialog" role="document">
+
+            <!-- Close -->
+
+            <button type="button" class="shola-modal-close" data-modal-close aria-label="Close dialog">
+
+                <i class="fa fa-times" aria-hidden="true"></i>
+
+            </button>
+
+            <!-- Heading -->
+
+            <div class="shola-modal-header">
+
+                <h3 id="wholesaleModalTitle">
+
+                    Request Wholesale Quotation
+
+                </h3>
+
+                <!-- <p>
+
+                    Fill in your details and our team will get back to you shortly.
+
+                </p> -->
+
+            </div>
+
+
+            <!-- Validation & submission are handled by js/form-handler.js (form[data-shola-form]) -->
+
+            <form id="wholesale-quotation-form" data-shola-form novalidate>
+
+                <div class="shola-modal-field">
+
+                    <label for="wholesale-name">Name</label>
+
+                    <input type="text" id="wholesale-name" name="name" class="form-control shola-input"
+                        placeholder="Name" autocomplete="name" required
+                        aria-describedby="wholesale-name-msg">
+
+                    <p class="shola-field-msg" id="wholesale-name-msg">
+
+                        Please enter your name.
+
+                    </p>
+
+                </div>
+
+                <div class="shola-modal-field">
+
+                    <label for="wholesale-address">Address</label>
+
+                    <textarea id="wholesale-address" name="address" rows="3" class="form-control shola-input"
+                        placeholder="Address" autocomplete="street-address"></textarea>
+
+                </div>
+
+                <div class="shola-modal-field">
+
+                    <label for="wholesale-email">Email</label>
+
+                    <input type="email" id="wholesale-email" name="email" class="form-control shola-input"
+                        placeholder="Email" autocomplete="email" required
+                        aria-describedby="wholesale-email-msg">
+
+                    <p class="shola-field-msg" id="wholesale-email-msg">
+
+                        Please enter a valid email address.
+
+                    </p>
+
+                </div>
+
+                <div class="shola-modal-field">
+
+                    <label for="wholesale-phone">Phone</label>
+
+                    <input type="tel" id="wholesale-phone" name="phone" class="form-control shola-input"
+                        placeholder="Phone" autocomplete="tel" inputmode="tel" required
+                        aria-describedby="wholesale-phone-msg">
+
+                    <p class="shola-field-msg" id="wholesale-phone-msg">
+
+                        Please enter your phone number.
+
+                    </p>
+
+                </div>
+
+                <div class="shola-modal-field">
+
+                    <label for="wholesale-subject">Subject</label>
+
+                    <input type="text" id="wholesale-subject" name="subject" class="form-control shola-input"
+                        placeholder="Subject" autocomplete="off">
+
+                </div>
+
+                <button type="submit" class="shola-contact-btn shola-modal-submit">
+
+                    Submit
+
+                    <i class="fa fa-arrow-right ms-2"></i>
+
+                </button>
+
+                <p class="shola-form-status" role="status" aria-live="polite"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -413,6 +541,7 @@
     <!-- Template Javascript -->
     <script src="js/include.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/form-handler.js"></script>
     <script>
         // Ensure carousel is initialized even if auto-ride is interfered with
         document.addEventListener('DOMContentLoaded', function () {
@@ -431,5 +560,83 @@
                 console.warn('Carousel init error', e);
             }
         });
+    </script>
+    <script>
+        /* ==================================
+           WHOLESALE QUOTATION MODAL — UI only.
+           Form validation & submission are handled
+           by js/form-handler.js (form[data-shola-form]).
+        =================================== */
+        (function () {
+            var modal = document.getElementById('wholesaleQuotationModal');
+            if (!modal) return;
+
+            var triggers = document.querySelectorAll('[data-wholesale-modal-open]');
+            var lastTrigger = null;
+            var closeTimer = null;
+
+            function isOpen() {
+                return modal.classList.contains('is-open');
+            }
+
+            function openModal(trigger) {
+                if (isOpen()) return;
+                window.clearTimeout(closeTimer);
+                lastTrigger = trigger || lastTrigger;
+
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+
+                // Force a reflow so the open transition always plays.
+                void modal.offsetWidth;
+                modal.classList.add('is-open');
+
+                // Focus the first field on desktop only (avoids opening the
+                // mobile keyboard on top of the heading).
+                var first = modal.querySelector('input, textarea');
+                if (first && window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
+                    window.setTimeout(function () {
+                        try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
+                    }, 350);
+                }
+            }
+
+            function closeModal() {
+                if (!isOpen()) return;
+
+                modal.classList.remove('is-open');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+
+                closeTimer = window.setTimeout(function () {
+                    modal.style.display = '';
+                }, 300);
+
+                if (lastTrigger) {
+                    try { lastTrigger.focus({ preventScroll: true }); } catch (e) { lastTrigger.focus(); }
+                }
+            }
+
+            Array.prototype.forEach.call(triggers, function (trigger) {
+                trigger.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    openModal(trigger);
+                });
+            });
+
+            // The × button and the backdrop share one delegated handler.
+            modal.addEventListener('click', function (event) {
+                if (event.target && event.target.closest && event.target.closest('[data-modal-close]')) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if ((event.key === 'Escape' || event.keyCode === 27) && isOpen()) {
+                    closeModal();
+                }
+            });
+        })();
     </script>
 </body>

@@ -200,8 +200,30 @@
 
                 <div class="shola-product-image">
 
-                    <img id="productImage" src="https://placehold.co/700x700/f7f3ec/b98b4d?text=Wooden+Tray+Curation"
-                        alt="Product" width="700" height="700" decoding="async">
+                    <div class="shola-product-carousel is-single" id="productCarousel">
+
+                        <div class="shola-carousel-track" id="productCarouselTrack">
+
+                            <div class="shola-carousel-slide">
+                                <img id="productImage" src="img/products/canopy/1.jpeg"
+                                    alt="The Canopy Collection" width="700" height="700" decoding="async">
+                            </div>
+
+                        </div>
+
+                        <button type="button" class="shola-carousel-btn shola-carousel-prev"
+                            aria-label="Previous image">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+
+                        <button type="button" class="shola-carousel-btn shola-carousel-next"
+                            aria-label="Next image">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+
+                        <div class="shola-carousel-dots" id="productCarouselDots"></div>
+
+                    </div>
 
                 </div>
 
@@ -251,7 +273,8 @@
 
                     <!-- CTA -->
 
-                    <a href="#" class="shola-product-link" style="color: #F28C28;">
+                    <a href="contact-us.html#contact-form-corporate" class="shola-product-link"
+                        style="color: #F28C28;">
 
                         Enquire Now
 
@@ -303,6 +326,7 @@
     <script src="js/include.js"></script>
 
     <script src="js/main.js"></script>
+    <script src="js/form-handler.js"></script>
 
 </body>
 
