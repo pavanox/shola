@@ -87,10 +87,17 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "The Canopy Collection",
 
-          image: "img/products/canopy/1.jpeg",
+          image: "img/products/signature/canopy.jpeg",
 
           images: [
-            "img/products/canopy/1.jpeg",
+            "img/products/signature/canopy.jpeg",
+            "img/products/signature/canopy2.jpeg",
+            "img/products/inner/rh.jpeg",
+            "img/products/inner/bp.jpeg",
+            "img/products/inner/rc.jpeg",
+            "img/products/signature/sig3.jpeg",
+             "img/products/signature/sig4.jpeg",
+             "img/products/signature/sig5.jpeg",
           ],
 
           description:
@@ -109,15 +116,14 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "The Aesthetic Coffee Experience",
 
-          image: "img/products/signature/3.jpeg",
+          image: "img/products/signature/coffee.jpeg",
 
           images: [
-            "img/products/signature/3.jpeg",
-            "img/products/signature/1.jpeg",
-            "img/products/signature/2.jpeg",
-            "img/products/signature/4.jpeg",
-            "img/products/signature/5.jpeg",
-            "img/products/signature/6.jpeg",
+            "img/products/signature/coffee.jpeg",
+            "img/products/signature/coffee2.jpeg",
+            "img/products/inner/rc.jpeg",
+             "img/products/signature/candle.jpeg",
+              "img/products/signature/sig4.jpeg",
           ],
 
           description:
@@ -143,15 +149,15 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "The Heritage Crate",
 
-          image: "img/products/premium/1.jpeg",
+          image: "img/products/premium/curated.jpeg",
 
           images: [
-            "img/products/premium/1.jpeg",
-            "img/products/premium/2.jpeg",
-            "img/products/premium/3.jpeg",
-            "img/products/premium/4.jpeg",
-            "img/products/premium/5.jpeg",
-            "img/products/premium/6.jpeg",
+            "img/products/premium/curated.jpeg",
+            "img/products/premium/curated2.jpeg",
+            "img/products/inner/rh.jpeg",
+            "img/products/inner/rc.jpeg",
+            "img/products/inner/bp.jpeg",
+             "img/products/signature/sig4.jpeg",
           ],
 
           description:
@@ -177,14 +183,14 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "The Sweet & Spice Blend",
 
-          image: "img/products/curated/2.jpeg",
+          image: "img/products/curated/1.jpeg",
 
           images: [
-            "img/products/curated/2.jpeg",
-            "img/products/curated/1.jpeg",
-            "img/products/curated/3.jpeg",
-            "img/products/curated/4.jpeg",
-            "img/products/curated/5.jpeg",
+           "img/products/curated/1.jpeg",
+           "img/products/curated/sweetspice.jpeg",
+           "img/products/inner/rh.jpeg",
+           "img/products/inner/bp.jpeg",
+            "img/products/signature/sig4.jpeg",
           ],
 
           description:
@@ -193,21 +199,21 @@ document.addEventListener("DOMContentLoaded", function () {
           features: [
             "Premium Raw Honey",
             "Whole Black Pepper",
-            "Nuts",
+            "Nuts Tube",
           ],
         },
 
         {
           title: "Morning Brew Ritual",
 
-          image: "img/products/curated/3.jpeg",
+          image: "img/products/curated/1.jpeg",
 
           images: [
-            "img/products/curated/3.jpeg",
             "img/products/curated/1.jpeg",
-            "img/products/curated/2.jpeg",
-            "img/products/curated/4.jpeg",
-            "img/products/curated/5.jpeg",
+            "img/products/curated/morning.jpeg",
+            "img/products/inner/rc.jpeg",
+            "img/products/inner/rh.jpeg",
+             "img/products/signature/sig4.jpeg",
           ],
 
           description:
@@ -216,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
           features: [
             "Rich Coffee Powder",
             "Premium Honey",
-            "Nuts",
+            "Nuts Tube",
           ],
         },
 
@@ -226,11 +232,11 @@ document.addEventListener("DOMContentLoaded", function () {
           image: "img/products/curated/1.jpeg",
 
           images: [
-            "img/products/curated/1.jpeg",
-            "img/products/curated/2.jpeg",
-            "img/products/curated/3.jpeg",
-            "img/products/curated/4.jpeg",
-            "img/products/curated/5.jpeg",
+           "img/products/curated/1.jpeg",
+           "img/products/curated/boldmix.jpeg",
+           "img/products/inner/rc.jpeg",
+           "img/products/inner/bp.jpeg",
+            "img/products/signature/sig4.jpeg",
           ],
 
           description:
@@ -255,9 +261,9 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           title: "Gift-lets",
 
-          image: "img/products/mini/1.jpeg",
+          image: "img/products/mini/mini.jpeg",
 
-          images: ["img/products/mini/1.jpeg", "img/products/mini/2.jpeg"],
+          images: ["img/products/mini/mini.jpeg","img/products/inner/rh.jpeg"],
 
           description:
             "A simple and thoughtful gift designed to make a big impression—perfect for celebrations, giveaways, and meaningful thank-you gestures.",
