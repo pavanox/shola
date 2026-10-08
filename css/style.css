@@ -8251,7 +8251,7 @@ color: var(--heading);
 
 .shola-main-title span{
 
-background: linear-gradient(90deg,#B0DCD1,#FFB968);
+background:#42534E;
 
 -webkit-background-clip:text;
 -webkit-text-fill-color: transparent;
@@ -9945,6 +9945,196 @@ body.shola-form-open .back-to-top {
 .navbar-dark .navbar-nav .nav-link {
     color: #42534e !important;
     font-weight: bold;
+}
+
+/* ================================================================
+   IMAGE RESPONSIVENESS FIX (zoom/crop/overflow only — no layout change)
+   Root causes:
+   1. Home banner: .carousel-item / img locked to 75vh on all widths
+      while .carousel-inner shrank (55/45/40vh) → img overflowed and
+      object-fit:cover heavily cropped (= "zoomed" look on mobile).
+   2. Products carousel: forced 1/1 square + cover on portrait
+      (~4:5) photos → top/bottom cropped off.
+   3. Wholesale cards: fixed 230px/200px height + cover (+ conflicting
+      10/7 ratio rule) on portrait photos → heavy crop/zoom.
+   Fix: sync heights, fluid widths, correct object-fit per image type.
+   ================================================================ */
+
+/* Global safety: fluid media + no horizontal scroll on mobile */
+img {
+    max-width: 100%;
+}
+html,
+body {
+    overflow-x: clip;
+}
+@supports not (overflow: clip) {
+    html,
+    body {
+        overflow-x: hidden;
+    }
+}
+
+/* ---------- 1. HOME: banner / carousel ---------- */
+/* Banner is full-bleed → cover is correct, but the frame and the
+   image must share the SAME height at every breakpoint. */
+#header-carousel .carousel-item,
+#header-carousel .carousel-inner {
+    height: 75vh;
+    min-height: 360px;
+}
+#header-carousel .carousel-item img {
+    display: block;
+    width: 100%;
+    height: 100%; /* was fixed 75vh → overflowed the 40vh mobile frame */
+    object-fit: cover;
+    object-position: center center;
+}
+
+@media (max-width: 991.98px) {
+    #header-carousel .carousel-item,
+    #header-carousel .carousel-inner {
+        height: 55vh;
+        min-height: 320px;
+    }
+    #header-carousel .carousel-item img {
+        height: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #header-carousel .carousel-item,
+    #header-carousel .carousel-inner {
+        height: 45vh;
+        min-height: 280px;
+    }
+    #header-carousel .carousel-item img {
+        height: 100%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #header-carousel .carousel-item,
+    #header-carousel .carousel-inner {
+        height: 40vh;
+        min-height: 240px;
+    }
+    #header-carousel .carousel-item img {
+        height: 100%;
+    }
+}
+
+/* ---------- 2. PRODUCTS: product carousel ---------- */
+/* Product photos are portrait (~4:5). The photo fills the card width
+   edge-to-edge at its natural ratio → no side letterbox bars, the
+   white card always hugs the image (image + its own padding only).
+   No height cap: capping height while width is 100% was shrinking the
+   photo inside a wide frame = the white bars in the screenshot. */
+.shola-product-image {
+    min-width: 0; /* allow grid/flex children to shrink on mobile */
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+    margin-inline: 0;
+}
+.shola-product-carousel {
+    /* Full card width so translateX(-100%) swipe math stays correct. */
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
+    overflow: hidden; /* contain the hover zoom so edges stay flush */
+    border-radius: 16px;
+}
+.shola-carousel-slide {
+    display: block; /* not flex: image fills the slide, no centering gaps */
+    background: transparent; /* card behind supplies the white, no double bars */
+    overflow: hidden;
+}
+.shola-carousel-slide img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: none; /* never squeeze the photo inside a wider frame */
+    aspect-ratio: auto; /* unset forced 1/1 square that cropped portraits */
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    margin: 0;
+}
+
+/* ---------- 4. HOME: "Crafted For Every Occasion" collection tiles ---------- */
+/* Tiles hold portrait product photos (~4:5) but the frame was a fixed
+   240px-high landscape box (220px/200px on small screens) + cover →
+   top/bottom cropped off = "zoomed" look on all 4 collections.
+   Fix: one fluid portrait frame + contain so the FULL photo shows on
+   big and small screens. Card body/design/hover untouched. */
+.shola-collection-image {
+    position: relative;
+    overflow: hidden;
+    height: auto; /* kill fixed 240px/220px/200px heights */
+    aspect-ratio: 4 / 5;
+    background: #FFFFFF;
+}
+.shola-collection-image img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+}
+
+@media (max-width: 991px) {
+    .shola-collection-image {
+        height: auto;
+        aspect-ratio: 4 / 5;
+    }
+}
+
+@media (max-width: 575px) {
+    .shola-collection-image {
+        height: auto;
+        aspect-ratio: 4 / 5;
+    }
+}
+
+/* ---------- 3. WHOLESALE: hero ---------- */
+/* Hero is an inline photo (landscape 4:3) → show whole image, fluid. */
+.shola-wholesale-image {
+    min-width: 0;
+}
+.shola-wholesale-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+}
+
+/* Cards hold portrait product photos. Fixed 230px/200px heights +
+   cover cropped them hard. Use one fluid portrait frame + contain
+   so the full product is visible at every width. Card height stays
+   uniform via the shared aspect-ratio (design preserved). */
+.shola-wholesale-card {
+    min-width: 0;
+}
+.shola-wholesale-card > img,
+.shola-wholesale-card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    background: #FFFFFF;
+}
+
+@media (max-width: 767px) {
+    .shola-wholesale-card > img,
+    .shola-wholesale-card img {
+        aspect-ratio: 4 / 5; /* keep uniform rows; no fixed px height */
+    }
 }
 
 

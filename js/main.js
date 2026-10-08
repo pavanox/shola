@@ -366,8 +366,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       img.src = src;
       img.alt = product.title + " - image " + (index + 1);
-      img.width = 700;
-      img.height = 700;
+      // Natural portrait size matches the real product photos (~896x1090).
+      // CSS controls display size (contain); these attrs only reserve space.
+      img.width = 896;
+      img.height = 1090;
       img.decoding = "async";
 
       if (index > 0) {
