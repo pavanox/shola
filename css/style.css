@@ -10079,7 +10079,6 @@ body {
     width: 100%;
     height: 100%;
     aspect-ratio: auto;
-    object-fit: contain;
     object-position: center center;
     display: block;
 }
@@ -10124,7 +10123,6 @@ body {
     width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
-    object-fit: contain;
     object-position: center center;
     display: block;
     background: #FFFFFF;

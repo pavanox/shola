@@ -91,13 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
           images: [
             "img/products/canopy/1.jpeg",
-            "img/products/canopy/2.jpeg",
-            "img/products/canopy/3.jpeg",
-            "img/products/canopy/4.jpeg",
-            "img/products/canopy/5.jpeg",
-            "img/products/canopy/6.jpeg",
-            "img/products/canopy/7.jpeg",
-            "img/products/canopy/8.jpeg",
           ],
 
           description:
@@ -200,6 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
           features: [
             "Premium Raw Honey",
             "Whole Black Pepper",
+            "Nuts",
           ],
         },
 
@@ -222,6 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
           features: [
             "Rich Coffee Powder",
             "Premium Honey",
+            "Nuts",
           ],
         },
 
