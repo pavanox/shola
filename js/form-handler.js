@@ -25,12 +25,14 @@
     'use strict';
 
     var FORMS = {
-        // FormSubmit AJAX endpoint delivers every submission to the inboxes.
-        // Primary inbox + CC copy so both owners see every enquiry.
+        // EVERY submission is delivered to BOTH inboxes as primary
+        // recipients (dual POST, not just CC) so both owners always
+        // see every enquiry from the contact + wholesale/enquiry forms.
         // IMPORTANT: EACH inbox must click its own one-time FormSubmit
         // activation email before delivery starts for that address.
         endpoint: 'https://formsubmit.co/ajax/info@sholaenterprises.com',
-        cc: 'pavan@sholaenterprises.com',
+        extraEndpoints: ['https://formsubmit.co/ajax/pavan@sholaenterprises.com'],
+        cc: '',
         thankYouPage: 'thank-you.html',
         storageKey: 'shola:form-submissions'
     };
@@ -180,12 +182,14 @@
         }
     }
 
-    function post(form, data) {
+    // Build a fresh FormData per inbox (a FormData body can only be
+    // consumed once) with the FormSubmit control fields applied.
+    function buildPayload(form) {
+        var data = new FormData(form);
         // FormSubmit control fields: nicer inbox subject, table template,
         // and skip FormSubmit's captcha so genuine visitors never get blocked.
         // _replyto is set from the visitor's email when the form has one
         // (wholesale/enquiry forms do; the main contact form uses phone).
-        // _cc sends pavan@sholaenterprises.com a copy of every submission.
         try {
             var subject = data.get('_subject') || data.get('subject');
             data.set('_subject', 'SHOLA website enquiry' + (subject ? ': ' + subject : ''));
@@ -195,14 +199,31 @@
             var replyTo = data.get('email');
             if (replyTo) data.set('_replyto', replyTo);
         } catch (e) { /* FormData not supported - post raw */ }
-        return fetch(FORMS.endpoint, {
-            method: 'POST',
-            body: data,
-            headers: { Accept: 'application/json' }
-        }).then(function (response) {
-            if (!response.ok) {
-                throw new Error('Submission failed with status ' + response.status);
-            }
+        return data;
+    }
+
+    // POST the same enquiry to the primary inbox AND every address in
+    // extraEndpoints, so info@ AND pavan@ each get their own copy.
+    // Resolves after ALL inboxes accept; rejects if ALL fail (a single
+    // inbox failing still counts as delivered so the visitor sees Thanks).
+    function post(form) {
+        var targets = [FORMS.endpoint].concat(FORMS.extraEndpoints || []);
+        var attempts = targets.map(function (url) {
+            return fetch(url, {
+                method: 'POST',
+                body: buildPayload(form),
+                headers: { Accept: 'application/json' }
+            }).then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Submission failed with status ' + response.status);
+                }
+            });
+        });
+        return Promise.all(attempts.map(function (p) {
+            return p.then(function () { return true; }, function () { return false; });
+        })).then(function (results) {
+            var delivered = results.some(function (ok) { return ok; });
+            if (!delivered) throw new Error('All inboxes rejected the submission');
         });
     }
 
@@ -251,7 +272,7 @@
             return;
         }
 
-        post(form, new FormData(form)).then(function () {
+        post(form).then(function () {
             restore();
             redirect(form);
         }).catch(function (error) {
