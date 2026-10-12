@@ -29,8 +29,8 @@
         // Primary inbox + CC copy so both owners see every enquiry.
         // IMPORTANT: EACH inbox must click its own one-time FormSubmit
         // activation email before delivery starts for that address.
-        endpoint: 'https://formsubmit.co/ajax/sholaenterprises26@gmail.com',
-        cc: 'pavanshon@gmail.com',
+        endpoint: 'https://formsubmit.co/ajax/info@sholaenterprises.com',
+        cc: 'pavan@sholaenterprises.com',
         thankYouPage: 'thank-you.html',
         storageKey: 'shola:form-submissions'
     };
@@ -185,7 +185,7 @@
         // and skip FormSubmit's captcha so genuine visitors never get blocked.
         // _replyto is set from the visitor's email when the form has one
         // (wholesale/enquiry forms do; the main contact form uses phone).
-        // _cc sends you (pavanshon@gmail.com) a copy of every submission.
+        // _cc sends pavan@sholaenterprises.com a copy of every submission.
         try {
             var subject = data.get('_subject') || data.get('subject');
             data.set('_subject', 'SHOLA website enquiry' + (subject ? ': ' + subject : ''));
@@ -257,7 +257,7 @@
         }).catch(function (error) {
             console.error('[SHOLA] form submission error', error);
             restore();
-            setStatus(form, 'Something went wrong while sending. Please try again, or email us at sholaenterprises26@gmail.com.', true);
+            setStatus(form, 'Something went wrong while sending. Please try again, or email us at info@sholaenterprises.com.', true);
         });
     }
     /* ---------------- enquiry CTAs ---------------- */
