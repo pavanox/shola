@@ -25,8 +25,12 @@
     'use strict';
 
     var FORMS = {
-        // e.g. 'https://formsubmit.co/ajax/info@sholaenterprises.com'
-        endpoint: '',
+        // FormSubmit AJAX endpoint delivers every submission to the inboxes.
+        // Primary inbox + CC copy so both owners see every enquiry.
+        // IMPORTANT: EACH inbox must click its own one-time FormSubmit
+        // activation email before delivery starts for that address.
+        endpoint: 'https://formsubmit.co/ajax/sholaenterprises26@gmail.com',
+        cc: 'pavanshon@gmail.com',
         thankYouPage: 'thank-you.html',
         storageKey: 'shola:form-submissions'
     };
@@ -177,6 +181,20 @@
     }
 
     function post(form, data) {
+        // FormSubmit control fields: nicer inbox subject, table template,
+        // and skip FormSubmit's captcha so genuine visitors never get blocked.
+        // _replyto is set from the visitor's email when the form has one
+        // (wholesale/enquiry forms do; the main contact form uses phone).
+        // _cc sends you (pavanshon@gmail.com) a copy of every submission.
+        try {
+            var subject = data.get('_subject') || data.get('subject');
+            data.set('_subject', 'SHOLA website enquiry' + (subject ? ': ' + subject : ''));
+            data.set('_template', 'table');
+            data.set('_captcha', 'false');
+            if (FORMS.cc) data.set('_cc', FORMS.cc);
+            var replyTo = data.get('email');
+            if (replyTo) data.set('_replyto', replyTo);
+        } catch (e) { /* FormData not supported - post raw */ }
         return fetch(FORMS.endpoint, {
             method: 'POST',
             body: data,
@@ -239,7 +257,7 @@
         }).catch(function (error) {
             console.error('[SHOLA] form submission error', error);
             restore();
-            setStatus(form, 'Something went wrong while sending. Please try again, or email us at info@sholaenterprises.com.', true);
+            setStatus(form, 'Something went wrong while sending. Please try again, or email us at sholaenterprises26@gmail.com.', true);
         });
     }
     /* ---------------- enquiry CTAs ---------------- */
